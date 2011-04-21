@@ -112,7 +112,7 @@ class Hoptoad_Core
         // Build server-environment subelement
         $server = $xml->addChild('server-environment');
         $server->addChild('project-root', DOCROOT);
-        $server->addChild('environment-name', Kohana::$environment);
+        $server->addChild('environment-name', $this->environment_name());
 
         return $xml->asXML();
     }
@@ -160,7 +160,7 @@ class Hoptoad_Core
      * @return void
      * @author Rich Cavanaugh
      */
-    function addXmlVars($parent, $key, $source)
+    public function addXmlVars($parent, $key, $source)
     {
         if (empty($source)) return;
 
@@ -171,5 +171,20 @@ class Hoptoad_Core
             $var_node = $node->addChild('var', $val);
             $var_node->addAttribute('key', $key);
         }
+    }
+    
+    /**
+     * Returns a string representation of the environment name.
+     *
+     * @return  string
+     */
+    public function environment_name()
+    {
+        // Find all constants in the Kohana class
+        $reflection = new ReflectionClass('Kohana');
+        $constants  = $reflection->getConstants();
+        
+        // Return the constant name for the current environment
+        return array_search(Kohana::$environment, $constants, TRUE);
     }
 }
