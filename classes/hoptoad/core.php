@@ -106,7 +106,7 @@ class Hoptoad_Core
                 ? array_merge($_SERVER, $_ENV)
                 : $_SERVER;
 
-            $this->addXmlVars($request, 'cgi-data', $this->_config['cgi_data']);
+            $this->addXmlVars($request, 'cgi-data', $cgi_data);
         }
 
         // Build server-environment subelement
