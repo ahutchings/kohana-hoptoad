@@ -3,7 +3,7 @@
 class Hoptoad_Exception_Core extends Exception
 {
     public static $previous_exception_handler;
-    
+
     public static function handler(Exception $e)
     {
         // Send the exception to Hoptoad

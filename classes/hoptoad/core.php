@@ -20,51 +20,51 @@ class Hoptoad_Core
     // Hoptoad instance
     protected static $_instance;
 
-	/**
-	 * Singleton pattern
-	 *
-	 * @return  Hoptoad
-	 */
-	public static function instance()
-	{
-		if ( ! isset(Hoptoad::$_instance))
-		{
-			// Load the configuration for this type
-			$config = Kohana::config('hoptoad');
+    /**
+     * Singleton pattern
+     *
+     * @return  Hoptoad
+     */
+    public static function instance()
+    {
+        if ( ! isset(Hoptoad::$_instance))
+        {
+            // Load the configuration for this type
+            $config = Kohana::config('hoptoad');
 
-			// Create a new session instance
-			Hoptoad::$_instance = new Hoptoad($config);
-		}
+            // Create a new session instance
+            Hoptoad::$_instance = new Hoptoad($config);
+        }
 
-		return Hoptoad::$_instance;
-	}
+        return Hoptoad::$_instance;
+    }
 
-	/**
-	 * @var  Config
-	 */
-	protected $_config;
+    /**
+     * @var  Config
+     */
+    protected $_config;
 
-	/**
-	 * Ensures singleton pattern is observed
-	 * 
-	 * @param  array  configuration
-	 */
-	public function __construct($config = array())
-	{
-		$this->_config = $config;
-	}
-	
-	/**
-	 * Sets the exception.
-	 *
-	 * @return  Hoptoad
-	 */
-	public function exception($e)
-	{
-	    $this->_exception = $e;
-	    
-	    return $this;
-	}
+    /**
+     * Ensures singleton pattern is observed
+     *
+     * @param  array  configuration
+     */
+    public function __construct($config = array())
+    {
+        $this->_config = $config;
+    }
+
+    /**
+     * Sets the exception.
+     *
+     * @return  Hoptoad
+     */
+    public function exception($e)
+    {
+        $this->_exception = $e;
+
+        return $this;
+    }
 
     /**
      * Renders the XML notice.
@@ -96,7 +96,7 @@ class Hoptoad_Core
         $request->addChild('url', Request::detect_uri());
         $request->addChild('component', NULL);
         $request->addChild('action', NULL);
-        
+
         if (isset($_REQUEST)) $this->addXmlVars($request, 'params', $_REQUEST);
         if (isset($_SESSION)) $this->addXmlVars($request, 'session', $_SESSION);
 
@@ -105,7 +105,7 @@ class Hoptoad_Core
             $cgi_data = (isset($_ENV) AND ! empty($_ENV))
                 ? array_merge($_SERVER, $_ENV)
                 : $_SERVER;
-                        
+
             $this->addXmlVars($request, 'cgi-data', $this->_config['cgi_data']);
         }
 
@@ -130,7 +130,7 @@ class Hoptoad_Core
             ->body($this->notice())
             ->execute();
     }
-    
+
     /**
      * Add a Hoptoad backtrace to the XML
      * @return void
@@ -154,7 +154,7 @@ class Hoptoad_Core
             $line_node->addAttribute('method', $entry['function']);
         }
     }
-    
+
     /**
      * Add a Hoptoad var block to the XML
      * @return void
