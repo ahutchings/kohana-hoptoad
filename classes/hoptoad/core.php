@@ -9,7 +9,7 @@ class Hoptoad_Core
     const API_VERSION = '2.0';
 
     // The version number of the notifier client submitting the request
-    const NOTIFIER_VERSION = 'v0.0.1';
+    const NOTIFIER_VERSION = 'v0.0.3';
 
     // The name of the notifier client submitting the request
     const NOTIFIER_NAME = 'kohana-hoptoad';
@@ -164,15 +164,26 @@ class Hoptoad_Core
     {
         if (empty($source)) return;
 
-        $node = $parent->addChild($key);
+        // If the key exists in the parent return it, otherwise create it
+        $node = $parent->xpath("$key") ? $parent->$key : $parent->addChild($key);
 
         foreach ($source as $key => $val)
         {
-            $var_node = $node->addChild('var', $val);
-            $var_node->addAttribute('key', $key);
+            if (is_array($val))
+            {
+                foreach ($val as $key1 => $val1)
+                {
+                    $this->addXmlVars($parent, $node->getName(), array($key.'['.$key1.']' => $val1));
+                }
+            }
+            else
+            {
+                $var_node = $node->addChild('var', $val);
+                $var_node->addAttribute('key', $key);
+            }
         }
     }
-    
+
     /**
      * Returns a string representation of the environment name.
      *
@@ -183,7 +194,7 @@ class Hoptoad_Core
         // Find all constants in the Kohana class
         $reflection = new ReflectionClass('Kohana');
         $constants  = $reflection->getConstants();
-        
+
         // Return the constant name for the current environment
         return array_search(Kohana::$environment, $constants, TRUE);
     }
