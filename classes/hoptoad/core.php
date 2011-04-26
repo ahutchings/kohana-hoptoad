@@ -1,5 +1,11 @@
 <?php defined('SYSPATH') or die('No direct script access.');
-
+/**
+ * Hoptoad base class
+ *
+ * @package    Hoptoad
+ * @author     Andrew Hutchings
+ * @copyright  (c) 2011 Andrew Hutchings
+ */
 class Hoptoad_Core
 {
     // Hoptoad Notifier API endpoint
@@ -132,9 +138,10 @@ class Hoptoad_Core
     }
 
     /**
-     * Add a Hoptoad backtrace to the XML
-     * @return void
-     * @author Rich Cavanaugh
+     * Add a Hoptoad backtrace to the XML.
+     *
+     * @author  Rich Cavanaugh
+     * @return  void
      */
     public function addXmlBacktrace($parent)
     {
@@ -156,9 +163,11 @@ class Hoptoad_Core
     }
 
     /**
-     * Add a Hoptoad var block to the XML
-     * @return void
-     * @author Rich Cavanaugh
+     * Add a Hoptoad var block to the XML.
+     *
+     * @author  Rich Cavanaugh
+     * @author  Andrew Hutchings
+     * @return  void
      */
     public function addXmlVars($parent, $key, $source)
     {
