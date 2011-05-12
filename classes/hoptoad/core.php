@@ -156,8 +156,8 @@ class Hoptoad_Core
                 continue;
 
             $line_node = $backtrace->addChild('line');
-            $line_node->addAttribute('file', $entry['file']);
-            $line_node->addAttribute('number', $entry['line']);
+            $line_node->addAttribute('file', Arr::get($entry, 'file', 'unknown'));
+            $line_node->addAttribute('number', Arr::get($entry, 'line', 'unknown'));
             $line_node->addAttribute('method', $entry['function']);
         }
     }
