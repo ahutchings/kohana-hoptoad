@@ -10,23 +10,31 @@
 class Hoptoad_Exception_Core extends Exception
 {
     /**
-	 * @var  callback  previously defined exception handler
-	 */
+     * @var  callback  previously defined exception handler
+     */
     public static $previous_exception_handler;
 
-	/**
-	 * Exception handler, sends the exception to Hoptoad and passes the
-	 * exception to the previously defined exception handler.
-	 *
-	 * @param   object   exception object
-	 * @return  void
-	 */
+    /**
+     * Exception handler, sends the exception to Hoptoad and passes the
+     * exception to the previously defined exception handler.
+     *
+     * @param   object   exception object
+     * @return  void
+     */
     public static function handler(Exception $e)
     {
-        // Send the exception to Hoptoad
-        Hoptoad::instance()
-            ->exception($e)
-            ->notify();
+        try
+        {
+            // Send the exception to Hoptoad
+            Hoptoad::instance()
+                ->exception($e)
+                ->notify();
+        }
+        catch (Exception $e)
+        {
+            // Log request exceptions
+            Log::instance()->add(Log::ERROR, $e->getMessage());
+        }
 
         // Pass the exception to the previously defined exception handler
         call_user_func(self::$previous_exception_handler, $e);
