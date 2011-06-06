@@ -15,7 +15,7 @@ class Hoptoad_Core
     const API_VERSION = '2.0';
 
     // The version number of the notifier client submitting the request
-    const NOTIFIER_VERSION = 'v0.0.3';
+    const NOTIFIER_VERSION = 'v0.0.5';
 
     // The name of the notifier client submitting the request
     const NOTIFIER_NAME = 'kohana-hoptoad';
